@@ -24,14 +24,12 @@ export class AuthGuard implements CanActivate {
     ]);
     if (isPublic) {
       // 💡 See this condition
-      console.log('isPublic');
       return true;
     }
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      console.log('no token');
       throw new UnauthorizedException();
     }
     try {
@@ -42,7 +40,6 @@ export class AuthGuard implements CanActivate {
       // so that we can access it in our route handlers
       request['user'] = payload;
     } catch {
-      console.log('other one');
       throw new UnauthorizedException();
     }
     return true;
